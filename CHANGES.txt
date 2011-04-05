@@ -2,7 +2,7 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.1 (unreleased)
+0.1 (2011-04-05)
 ----------------
 
 - Initial library skeleton created by nensskel.  [Gijs Nijholt]
