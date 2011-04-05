@@ -5,4 +5,5 @@ Changelog of lizard-sticky-twitterized
 0.1 (unreleased)
 ----------------
 
-- Initial library skeleton created by nensskel.  [your name]
+- Initial library skeleton created by nensskel.  [Gijs Nijholt]
+- Initial version of Twitter harvesting management command.

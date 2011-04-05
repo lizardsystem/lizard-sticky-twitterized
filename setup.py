@@ -21,15 +21,15 @@ tests_require = [
 
 setup(name='lizard-sticky-twitterized',
       version=version,
-      description="TODO",
+      description="A Twitter enabled version of the sticky app.",
       long_description=long_description,
       # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Programming Language :: Python',
                    'Framework :: Django',
                    ],
       keywords=[],
-      author='TODO',
-      author_email='TODO@nelen-schuurmans.nl',
+      author='Gijs Nijholt',
+      author_email='gijs.nijholt@nelen-schuurmans.nl',
       url='',
       license='GPL',
       packages=['lizard_sticky_twitterized'],

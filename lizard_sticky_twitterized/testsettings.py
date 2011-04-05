@@ -14,6 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.gis',
+    'django.contrib.gis.db',
     ]
 ROOT_URLCONF = 'lizard_sticky_twitterized.urls'
 
