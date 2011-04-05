@@ -22,11 +22,11 @@
 <div id="sticky"
      data-url-lizard-sticky-add="{% url lizard_sticky.add_sticky %}"
      class="sidebarbox">
-  <h2>Meldingen{% block linkback %}{% endblock %}</h2>
-  <form id="sticky">
-    <input id="sticky_navigate" type="radio" name="sticky" value="sticky_navigate" checked><label for="sticky_navigate">Navigeren</label></input>
-    <input id="sticky_add" type="radio" name="sticky" value="add_sticky"><label for="sticky_add">Melding plaatsen</label></input>
-  </form>
+  {# <h2>Meldingen{% block linkback %}{% endblock %}</h2> #}
+  {# <form id="sticky"> #}
+  {#   <input id="sticky_navigate" type="radio" name="sticky" value="sticky_navigate" checked><label for="sticky_navigate">Navigeren</label></input> #}
+  {#   <input id="sticky_add" type="radio" name="sticky" value="add_sticky"><label for="sticky_add">Melding plaatsen</label></input> #}
+  {# </form> #}
   </ul>
 
   {# The add-sticky popup div #}
@@ -68,28 +68,28 @@
 
 <div id="sticky-browser"
      class="sidebarbox sidebarbox-stretched">
-  <h2>Meldingen bladeren</h2>
+  <h2>Tweets bladeren</h2>
   <ul id="sticky-browser-list" class="automatic-tree filetree">
     <li class="workspace-acceptable file sticky-browser-item"
         data-name="Meldingen"
-        data-adapter-class="adapter_sticky"
+        data-adapter-class="adapter_sticky_twitterized"
         data-adapter-layer-json='{}'>
-      alle meldingen</li>
-    <li class="sticky-browser-item">
-      <span class="folder">op kernwoorden</span>
-      <ul>
-        {% for tag in tags %}
-        <li class="workspace-acceptable file"
-            data-name="Meldingen ({{ tag }})"
-            data-adapter-class="adapter_sticky"
-            data-adapter-layer-json='{"tags": ["{{ tag.slug }}"]}'>
-          {{ tag }}
-        </li>
-        {% empty %}
-        <li>geen kernwoorden</li>
-        {% endfor %}
-      </ul>
-    </li>
+      alle tweets</li>
+    {# <li class="sticky-browser-item"> #}
+    {#   <span class="folder">op kernwoorden</span> #}
+    {#   <ul> #}
+    {#     {% for tag in tags %} #}
+    {#     <li class="workspace-acceptable file" #}
+    {#         data-name="Meldingen ({{ tag }})" #}
+    {#         data-adapter-class="adapter_sticky_twitterized" #}
+    {#         data-adapter-layer-json='{"tags": ["{{ tag.slug }}"]}'> #}
+    {#       {{ tag }} #}
+    {#     </li> #}
+    {#     {% empty %} #}
+    {#     <li>geen kernwoorden</li> #}
+    {#     {% endfor %} #}
+    {#   </ul> #}
+    {# </li> #}
   </ul>
 </div>
 

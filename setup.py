@@ -40,5 +40,10 @@ setup(name='lizard-sticky-twitterized',
       extras_require = {'test': tests_require},
       entry_points={
           'console_scripts': [
-          ]},
+          ],
+          'lizard_map.adapter_class': [
+            'adapter_sticky_twitterized = lizard_sticky_twitterized.layers:AdapterStickyTwitterized',
+          ],
+          },
+          
       )

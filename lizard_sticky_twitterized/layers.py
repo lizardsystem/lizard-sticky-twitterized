@@ -13,17 +13,17 @@ from django.template.loader import render_to_string
 from lizard_map import workspace
 from lizard_map.coordinates import WGS84
 from lizard_map.coordinates import wgs84_to_google
+from lizard_map.mapnik_helper import add_datasource_point
 from lizard_map.models import ICON_ORIGINALS
 from lizard_map.symbol_manager import SymbolManager
-from lizard_sticky.models import Sticky
-from lizard_sticky.models import Tag
+from lizard_sticky_twitterized.models import StickyTweet
 
-ICON_STYLE = {'icon': 'sticky_twitter.png',
-              'mask': ('sticky_twitter_mask.png', ),
-              'color': (1, 1, 0, 0)}
+ICON_STYLE = {'icon': 'twitter.png',
+              'mask': ('twitter_mask.png', ),
+              'color': (1, 1, 1, 0)}
 
 
-class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
+class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
 
     def __init__(self, *args, **kwargs):
         """
@@ -31,12 +31,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
 
         If no tags are selected, all stickies are selected!
         """
-        super(WorkspaceItemAdapterSticky, self).__init__(*args, **kwargs)
-        self.tags = []
-        self.tag_objects = []
-        if 'tags' in self.layer_arguments:
-            self.tags = self.layer_arguments['tags']
-            self.tag_objects = [Tag.objects.get(slug=tag) for tag in self.tags]
+        super(AdapterStickyTwitterized, self).__init__(*args, **kwargs)
 
     def style(self):
         """
@@ -65,29 +60,21 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         tags
         """
 
-        # Use these coordinates to put points 'around' actual
-        # coordinates, to compensate for bug #402 in mapnik.
-        around = [(0.00001, 0),
-                  (-0.00001, 0),
-                  (0, 0.00001),
-                  (0, -0.00001)]
-
         layers = []
         styles = {}
         layer = mapnik.Layer("Stickies", WGS84)
 
         layer.datasource = mapnik.PointDatasource()
-        stickies = StickyTweet.objects.all()
+        stickies = StickyTweet.objects.exclude(geom=None)
 
         for sticky in stickies:
-            layer.datasource.add_point(
-                sticky.geom.x, sticky.geom.y, 'Name', str(sticky.title))
-            for offset_x, offset_y in around:
-                layer.datasource.add_point(
-                    sticky.geom.x + offset_x,
-                    sticky.geom.y + offset_y,
-                    'Name',
-                    str(sticky.title))
+            print sticky.geom.x
+            print sticky.geom.y
+            add_datasource_point(layer.datasource, 
+                sticky.geom.x,
+                sticky.geom.y,
+                'Name',
+                'hssd')
 
         # generate "unique" point style name and append to layer
         style_name = "StickyTweets"
@@ -121,8 +108,8 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             geom__distance_lte=(pnt, D(m=radius * 0.5)))
 
         result = [{'distance': 0.0,
-                   'name': '%s (%s)' % (sticky.title, sticky.reporter),
-                   'shortname': str(sticky.title),
+                   'name': '%s (%s)' % (sticky.tweet, sticky.twitter_name),
+                   'shortname': str(sticky.tweet),
                    'object': sticky,
                    #'google_coords': wgs84_to_google(sticky.geom.x,
                    #                                 sticky.geom.y),
@@ -140,8 +127,8 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         sticky = get_object_or_404(StickyTweet, pk=sticky_id)
         identifier = {'sticky_id': sticky.id}
         return {
-            'name': '%s (%s)' % (sticky.title, sticky.reporter),
-            'shortname': str(sticky.title),
+            'name': '%s' % (sticky.twitter_name),
+            'tweet': str(sticky.tweet),
             'workspace_item': self.workspace_item,
             'identifier': identifier,
             'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
@@ -149,7 +136,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             }
 
     def symbol_url(self, identifier=None, start_date=None, end_date=None):
-        return super(WorkspaceItemAdapterSticky, self).symbol_url(
+        return super(AdapterStickyTwitterized, self).symbol_url(
             identifier=identifier,
             start_date=start_date,
             end_date=end_date,
@@ -168,7 +155,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         if layout_options and 'add_snippet' in layout_options:
             add_snippet = layout_options['add_snippet']
         return render_to_string(
-            'lizard_sticky/popup_sticky.html',
+            'lizard_sticky_twitterized/popup_sticky_twitterized.html',
             {'display_group': display_group,
              'add_snippet': add_snippet,
              'symbol_url': self.symbol_url()})

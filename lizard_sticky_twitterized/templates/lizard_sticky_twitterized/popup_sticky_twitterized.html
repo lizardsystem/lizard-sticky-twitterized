@@ -1,0 +1,31 @@
+{% load workspaces tweets %}
+{# header #}
+<h3>Melding(en)</h3>
+<div><img src="{{ symbol_url }}"/>&nbsp;</div>
+{# body #}
+<div>
+  <table class="noprint generic-table">
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Tweet
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for display_object in display_group %}
+        <tr>
+          <td>{{ display_object.name }}</td>
+          <td>
+              {% autoescape off %}{{ display_object.tweet }}{% endautoescape %}
+              {% yfrog_images display_object.tweet 1 'thumb' %}
+              {% twitpic_images display_object.tweet 1 'thumb' %}
+          </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
