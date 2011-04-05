@@ -5,7 +5,7 @@ Changelog of lizard-sticky-twitterized
 0.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Working version as tested on Gijs' VM.
 
 
 0.1 (2011-04-05)
