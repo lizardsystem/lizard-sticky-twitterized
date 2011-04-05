@@ -2,7 +2,7 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.3 (unreleased)
+0.3 (2011-04-05)
 ----------------
 
 - Adding big twitter icon.
