@@ -2,4 +2,10 @@ from django.contrib import admin
 from lizard_sticky_twitterized.models import StickyTweet
 
 
-admin.site.register(StickyTweet)
+class StickyTweetAdmin(admin.ModelAdmin):
+    list_display = (
+        '__unicode__', 'twitter_name', 'status_id', 'tweet',
+        'visible', 'created_on', 'updated_on', 'geom', )
+
+
+admin.site.register(StickyTweet, StickyTweetAdmin)
