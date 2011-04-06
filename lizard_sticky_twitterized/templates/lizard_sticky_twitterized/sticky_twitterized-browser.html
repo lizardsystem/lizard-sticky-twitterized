@@ -75,22 +75,15 @@
         data-adapter-class="adapter_sticky_twitterized"
         data-adapter-layer-json='{}'>
       alle tweets</li>
-    {# <li class="sticky-browser-item"> #}
-    {#   <span class="folder">op kernwoorden</span> #}
-    {#   <ul> #}
-    {#     {% for tag in tags %} #}
-    {#     <li class="workspace-acceptable file" #}
-    {#         data-name="Meldingen ({{ tag }})" #}
-    {#         data-adapter-class="adapter_sticky_twitterized" #}
-    {#         data-adapter-layer-json='{"tags": ["{{ tag.slug }}"]}'> #}
-    {#       {{ tag }} #}
-    {#     </li> #}
-    {#     {% empty %} #}
-    {#     <li>geen kernwoorden</li> #}
-    {#     {% endfor %} #}
-    {#   </ul> #}
-    {# </li> #}
   </ul>
+  <h2>Laatste tweets</h2>
+  <div id="latest tweets">
+    <ul>
+      {% for tweet in tweets %}
+      <li>{{ tweet.tweet }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 
 {% for workspace in workspaces.user %}

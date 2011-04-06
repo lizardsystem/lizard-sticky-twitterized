@@ -65,7 +65,8 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         layer = mapnik.Layer("Stickies", WGS84)
 
         layer.datasource = mapnik.PointDatasource()
-        stickies = StickyTweet.objects.exclude(geom=None)
+        stickies = StickyTweet.objects.exclude(
+            geom=None).exclude(visible=False)
 
         for sticky in stickies:
             add_datasource_point(layer.datasource,
@@ -102,7 +103,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         #pnt = Point(x, y, srid=28992)  # 900913
         pnt = Point(google_x, google_y, srid=900913)  # 900913
         #print pnt, radius
-        stickies = StickyTweet.objects.filter(
+        stickies = StickyTweet.objects.exclude(visible=False).filter(
             geom__distance_lte=(pnt, D(m=radius * 0.5)))
 
         result = [{'distance': 0.0,

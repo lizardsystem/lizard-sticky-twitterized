@@ -34,12 +34,15 @@ def sticky_browser(
         {'name': 'meldingen',
          'url': reverse('lizard_sticky_twitterized.sticky_browser')})
 
+    tweets = StickyTweet.objects.all().order_by('-created_on')[:5]
+
     return render_to_response(
         template,
         {'date_range_form': date_range_form,
          'workspaces': workspaces,
          'javascript_hover_handler': 'popup_hover_handler',
          'javascript_click_handler': 'sticky_popup_click_handler',
+         'tweets': tweets,
          'crumbs': crumbs,
          },
         context_instance=RequestContext(request))

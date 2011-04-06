@@ -5,7 +5,13 @@ Changelog of lizard-sticky-twitterized
 0.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Removed print statements.
+
+- Added admin.
+
+- Added logging.
+
+- Added last tweets list.
 
 
 0.3 (2011-04-05)
