@@ -68,9 +68,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         stickies = StickyTweet.objects.exclude(geom=None)
 
         for sticky in stickies:
-            print sticky.geom.x
-            print sticky.geom.y
-            add_datasource_point(layer.datasource, 
+            add_datasource_point(layer.datasource,
                 sticky.geom.x,
                 sticky.geom.y,
                 'Name',

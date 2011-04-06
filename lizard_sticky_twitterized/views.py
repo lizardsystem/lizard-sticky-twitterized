@@ -12,9 +12,10 @@ from lizard_map.workspace import WorkspaceManager
 from lizard_sticky_twitterized.models import StickyTweet
 
 
-def sticky_browser(request,
-                   template='lizard_sticky_twitterized/sticky_twitterized-browser.html',
-                   crumbs_prepend=None):
+def sticky_browser(
+    request,
+    template='lizard_sticky_twitterized/sticky_twitterized-browser.html',
+    crumbs_prepend=None):
     """Show sticky browser.
 
     Automatically makes new workspace if not yet available
@@ -29,8 +30,9 @@ def sticky_browser(request,
         crumbs = list(crumbs_prepend)
     else:
         crumbs = [{'name': 'home', 'url': '/'}]
-    crumbs.append({'name': 'meldingen',
-                   'url': reverse('lizard_sticky_twitterized.sticky_browser')})
+    crumbs.append(
+        {'name': 'meldingen',
+         'url': reverse('lizard_sticky_twitterized.sticky_browser')})
 
     return render_to_response(
         template,
@@ -41,8 +43,6 @@ def sticky_browser(request,
          'crumbs': crumbs,
          },
         context_instance=RequestContext(request))
-
-
 
 
 # def map(request):
