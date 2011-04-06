@@ -5,7 +5,7 @@ Changelog of lizard-sticky-twitterized
 0.4.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Filtering on visibility [Jack & Gijs]
 
 
 0.4.1 (2011-04-06)
