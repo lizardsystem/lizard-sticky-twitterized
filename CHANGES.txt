@@ -2,10 +2,10 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.5 (unreleased)
-----------------
+0.4.1 (2011-04-06)
+------------------
 
-- Nothing changed yet.
+- Modified color of Twitter icon [Jack].
 
 
 0.4 (2011-04-06)
