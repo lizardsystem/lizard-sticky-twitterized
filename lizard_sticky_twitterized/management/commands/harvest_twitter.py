@@ -11,11 +11,14 @@ import logging
 import urllib2
 import pprint
 
+logger = logging.getLogger(__name__)
+
+
 class Command(BaseCommand):
 
     help = "Query Twitter's realtime search for a hashtag and store the results."
     args = "some hash tags here"
-    
+
     def handle(self, *args, **options):
         """
         Query Twitter's realtime search for a hashtag, and store the results.
@@ -26,17 +29,17 @@ class Command(BaseCommand):
 
         if not args:
             return "No hashtags supplied.\n"
-            
+
         for arg in args:
             urls.append("http://search.twitter.com/search.json?q=%23" + str(arg) + "&result_type=recent")
-            print "- Querying Twitter for #" + str(arg)
+            logger.info("- Querying Twitter for #%s" % str(arg))
 
         for url in urls:
             u = urllib2.urlopen(url)
             resultset = json.loads(u.read())
             for result in resultset['results']:
-                print "*** " + unicode(result['text'])
-                pprint.pprint(result)
+                # print "*** " + unicode(result['text'])
+                # pprint.pprint(result)
                 if not StickyTweet.objects.filter(tweet__iexact=result['text']).count() > 0:
                     tweet = StickyTweet()
                     tweet.twitter_name = result['from_user']
@@ -51,5 +54,6 @@ class Command(BaseCommand):
                     else:
                         tweet.geom = None
                     tweet.save()
-                    
+                    logger.info("added tweet %s" % tweet)
+
         return "Added " + str(numitems) + " tweets.\n"
