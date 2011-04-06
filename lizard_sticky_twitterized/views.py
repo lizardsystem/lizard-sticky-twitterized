@@ -34,7 +34,7 @@ def sticky_browser(
         {'name': 'meldingen',
          'url': reverse('lizard_sticky_twitterized.sticky_browser')})
 
-    tweets = StickyTweet.objects.all().order_by('-created_on')[:5]
+    tweets = StickyTweet.objects.filter(visible=True).order_by('-created_on')[:5]
 
     return render_to_response(
         template,
@@ -46,8 +46,3 @@ def sticky_browser(
          'crumbs': crumbs,
          },
         context_instance=RequestContext(request))
-
-
-# def map(request):
-#     all_geo_tweets = StickyTweet.objects.filter(latitude__isnull=False)
-#     return render_to_response('lizard_sticky_twitterized/map.html', locals(), context_instance=RequestContext(request))
