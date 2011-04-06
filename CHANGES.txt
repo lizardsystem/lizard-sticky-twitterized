@@ -2,7 +2,7 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.4 (unreleased)
+0.4 (2011-04-06)
 ----------------
 
 - Removed print statements.
