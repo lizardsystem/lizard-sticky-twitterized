@@ -5,7 +5,7 @@ Changelog of lizard-sticky-twitterized
 0.4.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Removed header from popup (looks better).
 
 
 0.4.2 (2011-04-06)
