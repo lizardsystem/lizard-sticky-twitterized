@@ -12,6 +12,7 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-staticfiles',
+    'lizard-map >= 1.60',
     'lizard-ui',
     'django-nose',
     ],
@@ -45,5 +46,5 @@ setup(name='lizard-sticky-twitterized',
             'adapter_sticky_twitterized = lizard_sticky_twitterized.layers:AdapterStickyTwitterized',
           ],
           },
-          
+
       )

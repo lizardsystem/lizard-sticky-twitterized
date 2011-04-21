@@ -6,9 +6,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from lizard_map import coordinates
-from lizard_map.daterange import current_start_end_dates
-from lizard_map.daterange import DateRangeForm
-from lizard_map.workspace import WorkspaceManager
 from lizard_sticky_twitterized.models import StickyTweet
 
 
@@ -21,11 +18,6 @@ def sticky_browser(
     Automatically makes new workspace if not yet available
 
     """
-    workspace_manager = WorkspaceManager(request)
-    workspaces = workspace_manager.load_or_create()
-    date_range_form = DateRangeForm(
-        current_start_end_dates(request, for_form=True))
-
     if crumbs_prepend is not None:
         crumbs = list(crumbs_prepend)
     else:
@@ -38,9 +30,7 @@ def sticky_browser(
 
     return render_to_response(
         template,
-        {'date_range_form': date_range_form,
-         'workspaces': workspaces,
-         'javascript_hover_handler': 'popup_hover_handler',
+        {'javascript_hover_handler': 'popup_hover_handler',
          'javascript_click_handler': 'sticky_popup_click_handler',
          'tweets': tweets,
          'crumbs': crumbs,
