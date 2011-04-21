@@ -2,7 +2,7 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.4.4 (unreleased)
+0.4.4 (2011-04-21)
 ------------------
 
 - Removed unnecessary workspace_manager and date_range_form stuff. It
