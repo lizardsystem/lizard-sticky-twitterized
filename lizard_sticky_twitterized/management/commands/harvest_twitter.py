@@ -5,7 +5,10 @@ from django.core.management.base import BaseCommand
 from django.db import models
 from django.http import HttpResponse
 from django.utils import simplejson as json
+
 from lizard_sticky_twitterized.models import StickyTweet
+
+from tweetstream import FilterStream
 
 import logging
 import urllib2
@@ -21,39 +24,32 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """
-        Query Twitter's realtime search for a hashtag, and store the results.
+        Query Twitter's Streaming API for a keyword, and store the results.
         Schedule this as needed, with something like Celery or cron.
+
+        FilterStream can be used to filter on a bbox:
+        Locations are a list of bounding boxes in which geotagged tweets should originate. 
+        The argument should be an iterable of longitude/latitude pairs.
+        FilterStream("username", "password", track=words,
+        ...                               follow=people, locations=locations) as stream
         """
-        numitems = 0
-        urls = []
+        with FilterStream("wijgm", "kikker123", track=args) as stream:
+            for tweet in stream:
+                new_tweet = StickyTweet()
+                new_tweet.twitter_name = tweet['user']['screen_name']
+                new_tweet.tweet = tweet['text']
+                new_tweet.status_id = tweet['id']
+                
+                if tweet['geo'] is not None:
+                    new_tweet.geom = Point(
+                        float(tweet['geo']['coordinates'][1]),
+                        float(tweet['geo']['coordinates'][0])
+                    )
+                else:
+                    new_tweet.geom = None
 
-        if not args:
-            return "No hashtags supplied.\n"
+                media = tweet['entities'].get('media')
+                if media:
+                    new_tweet.media_url = media[0].get('media_url')
 
-        for arg in args:
-            urls.append("http://search.twitter.com/search.json?q=%23" + str(arg) + "&result_type=recent")
-            logger.info("- Querying Twitter for #%s" % str(arg))
-
-        for url in urls:
-            u = urllib2.urlopen(url)
-            resultset = json.loads(u.read())
-            for result in resultset['results']:
-                # print "*** " + unicode(result['text'])
-                # pprint.pprint(result)
-                if not StickyTweet.objects.filter(tweet__iexact=result['text']).count() > 0:
-                    tweet = StickyTweet()
-                    tweet.twitter_name = result['from_user']
-                    tweet.tweet = result['text']
-                    tweet.status_id = result['id']
-                    numitems = numitems + 1
-                    if result['geo'] is not None:
-                        tweet.geom = Point(
-                            float(result['geo']['coordinates'][1]),
-                            float(result['geo']['coordinates'][0])
-                        )
-                    else:
-                        tweet.geom = None
-                    tweet.save()
-                    logger.info("added tweet %s" % tweet)
-
-        return "Added " + str(numitems) + " tweets.\n"
+                new_tweet.save()

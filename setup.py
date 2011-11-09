@@ -15,6 +15,7 @@ install_requires = [
     'lizard-map >= 1.60',
     'lizard-ui',
     'django-nose',
+    'tweetstream'
     ],
 
 tests_require = [
