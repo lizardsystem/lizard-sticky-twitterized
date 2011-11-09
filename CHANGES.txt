@@ -2,7 +2,7 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.4.5 (unreleased)
+0.4.5 (2011-11-09)
 ------------------
 
 - Rewritten to use tweetstream.
