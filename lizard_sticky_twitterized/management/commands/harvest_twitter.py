@@ -1,18 +1,19 @@
 #!/usr/bin/python
 # (c) Nelen & Schuurmans.  GPL licensed.
+import logging
+import urllib2
+import pprint
+
+from django.conf import settings
 from django.contrib.gis.geos import Point
 from django.core.management.base import BaseCommand
 from django.db import models
 from django.http import HttpResponse
 from django.utils import simplejson as json
+from tweetstream import FilterStream
 
 from lizard_sticky_twitterized.models import StickyTweet
 
-from tweetstream import FilterStream
-
-import logging
-import urllib2
-import pprint
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,7 @@ class Command(BaseCommand):
         FilterStream("username", "password", track=words,
         ...                               follow=people, locations=locations) as stream
         """
-        with FilterStream("wijgm", "kikker123", track=args) as stream:
+        with FilterStream(getattr(settings, 'TWITTER_USERNAME', 'pietje'), getattr(settings, "TWITTER_PASSWORD", "pietje"), track=args) as stream:
             for tweet in stream:
                 new_tweet = StickyTweet()
                 new_tweet.twitter_name = tweet['user']['screen_name']
