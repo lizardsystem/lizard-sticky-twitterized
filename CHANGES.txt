@@ -5,7 +5,17 @@ Changelog of lizard-sticky-twitterized
 0.4.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Updating lizard_sticky_twitterized to use Twitter's Streaming API instead of the search API. 
+
+- This has at least two immediate benefits:
+
+- Speed: new matching tweets pop up instantaneously.
+
+- Images and other media are easily retrieved no matter the image service.
+
+- One tradeoff:
+
+- Requests must be authenticated and are rate-limited.
 
 
 0.4.5 (2011-11-09)
