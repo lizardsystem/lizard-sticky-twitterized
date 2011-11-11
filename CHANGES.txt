@@ -2,7 +2,7 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.4.6 (unreleased)
+0.4.6 (2011-11-11)
 ------------------
 
 - Updating lizard_sticky_twitterized to use Twitter's Streaming API instead of the search API. 
