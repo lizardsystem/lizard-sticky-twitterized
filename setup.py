@@ -12,7 +12,8 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-staticfiles',
-    'lizard-map >= 1.60',
+    'lizard-map',
+    'sorl-thumbnail',
     'lizard-ui',
     'django-nose',
     'tweetstream'
