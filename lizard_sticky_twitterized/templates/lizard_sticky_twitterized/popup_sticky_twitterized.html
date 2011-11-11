@@ -1,30 +1,12 @@
-{% load workspaces tweets %}
+{% load workspaces thumbnail i18n %}
 {# header #}
 <div><img src="{{ symbol_url }}"/>&nbsp;</div>
 {# body #}
 <div>
-  <table class="noprint generic-table">
-    <thead>
-      <tr>
-        <th>
-          Name
-        </th>
-        <th>
-          Tweet
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-        {% for display_object in display_group %}
-        <tr>
-          <td>{{ display_object.name }}</td>
-          <td>
-              {% autoescape off %}{{ display_object.tweet }}{% endautoescape %}
-              {% yfrog_images display_object.tweet 1 'thumb' %}
-              {% twitpic_images display_object.tweet 1 'thumb' %}
-          </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-  </table>
+{% for display_object in display_group %}
+<strong><a href="http://www.twitter.com/{{ display_object.name }}">@{{ display_object.name }}</a></strong>&nbsp;
+{{ display_object.object.created_on|timesince }} {% trans "geleden" %}
+<p>{{ display_object.tweet|urlize }}</p>
+{% thumbnail display_object.media_url "320x200" crop="center" as im %}<img src="{{ im.url }}">{% endthumbnail %}
+{% endfor %}
 </div>

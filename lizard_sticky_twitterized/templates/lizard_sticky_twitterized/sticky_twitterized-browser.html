@@ -20,7 +20,6 @@
 
 {% block sidebar %}
 <div id="sticky"
-     data-url-lizard-sticky-add="{% url lizard_sticky.add_sticky %}"
      class="sidebarbox">
   {# <h2>Meldingen{% block linkback %}{% endblock %}</h2> #}
   {# <form id="sticky"> #}
@@ -79,17 +78,18 @@
   <h2>Laatste tweets</h2>
   <div id="latest-tweets">
     <ul>
-      {% for tweet in tweets %}
-      <li>{{ tweet.tweet }}</li>
+      {% for tweet in view.tweets %}
+      <li class="workspace-acceptable file sticky-browser-item"
+          data-name="{{ tweet.tweet }}"
+          data-adapter-class="adapter_sticky_twitterized"
+          data-adapter-layer-json='{"id":{{ tweet.id }}}'>
+        {{ tweet.tweet }}</li>
       {% endfor %}
     </ul>
   </div>
 </div>
 
-{% for workspace in workspaces.user %}
-  {% workspace workspace %}
-{% empty %}
-No workspace
-{% endfor %}
+{% workspace_edit view.workspace_edit %}
+{% collage_edit view.collage_edit %}
 
 {% endblock %}

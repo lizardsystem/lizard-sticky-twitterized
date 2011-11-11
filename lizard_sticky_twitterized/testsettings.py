@@ -7,6 +7,7 @@ INSTALLED_APPS = [
     'lizard_sticky_twitterized',
     'lizard_ui',
     'staticfiles',
+    'sorl.thumbnail',
     'compressor',
     'django_nose',
     'django.contrib.admin',

@@ -55,6 +55,18 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
 
         return point_style
 
+    @property
+    def stickies(self):
+        """
+        Return Stickies.
+        """
+        result = StickyTweet.objects.exclude(
+            geom=None).exclude(visible=False)
+        if self.layer_arguments:
+            result =  result.filter(id=self.layer_arguments['id'])
+        return result
+        
+
     def layer(self, layer_ids=None, request=None):
         """Return a layer with all stickies or stickies with selected
         tags
@@ -65,10 +77,8 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         layer = mapnik.Layer("Stickies", WGS84)
 
         layer.datasource = mapnik.PointDatasource()
-        stickies = StickyTweet.objects.exclude(
-            geom=None).exclude(visible=False)
 
-        for sticky in stickies:
+        for sticky in self.stickies:
             add_datasource_point(layer.datasource,
                 sticky.geom.x,
                 sticky.geom.y,
@@ -87,7 +97,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         """Return values in list of dictionaries (datetime, value, unit)
         """
 
-        stickies = StickyTweet.objects.filter(datetime__gte=start_date,
+        stickies = self.stickies.filter(datetime__gte=start_date,
                                          datetime__lte=end_date)
         return [{'datetime': sticky.datetime,
                  'value': sticky.description,
@@ -103,8 +113,12 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         #pnt = Point(x, y, srid=28992)  # 900913
         pnt = Point(google_x, google_y, srid=900913)  # 900913
         #print pnt, radius
-        stickies = StickyTweet.objects.exclude(visible=False).filter(
-            geom__distance_lte=(pnt, D(m=radius * 0.5)))
+
+        stickies = self.stickies.filter(
+            geom__distance_lte=(pnt, D(m=radius * 0.5))).distance(pnt).order_by('distance')
+            
+        if stickies:
+            stickies = [stickies[0]]
 
         result = [{'distance': 0.0,
                    'name': '%s (%s)' % (sticky.tweet, sticky.twitter_name),
@@ -125,9 +139,13 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         """
         sticky = get_object_or_404(StickyTweet, pk=sticky_id)
         identifier = {'sticky_id': sticky.id}
+        
+
+        print sticky.media_url
         return {
             'name': '%s' % (sticky.twitter_name),
             'tweet': str(sticky.tweet),
+            'media_url': str(sticky.media_url),
             'workspace_item': self.workspace_item,
             'identifier': identifier,
             'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),

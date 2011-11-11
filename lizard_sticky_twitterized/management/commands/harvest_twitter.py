@@ -18,9 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-
     help = "Query Twitter's realtime search for a hashtag and store the results."
-    args = "some hash tags here"
+    args = "Some hash tags here..."
 
     def handle(self, *args, **options):
         """
@@ -53,3 +52,4 @@ class Command(BaseCommand):
                     new_tweet.media_url = media[0].get('media_url')
 
                 new_tweet.save()
+                logging.debug(new_tweet.tweet)
