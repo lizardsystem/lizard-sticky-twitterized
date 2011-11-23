@@ -33,7 +33,9 @@ class Command(BaseCommand):
         FilterStream("username", "password", track=words,
         ...                               follow=people, locations=locations) as stream
         """
+        logger.warn("Listening to Twitter's Streaming API...")
         with FilterStream(getattr(settings, 'TWITTER_USERNAME', 'pietje'), getattr(settings, "TWITTER_PASSWORD", "pietje"), track=args) as stream:
+            
             for tweet in stream:
                 new_tweet = StickyTweet()
                 new_tweet.twitter_name = tweet['user']['screen_name']
@@ -53,4 +55,4 @@ class Command(BaseCommand):
                     new_tweet.media_url = media[0].get('media_url')
 
                 new_tweet.save()
-                logging.debug(new_tweet.tweet)
+                logger.warn(new_tweet.tweet)
