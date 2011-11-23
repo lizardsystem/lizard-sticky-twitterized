@@ -2,7 +2,7 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.4.7 (unreleased)
+0.4.7 (2011-11-23)
 ------------------
 
 - Updated logging to see what's going on in production.
