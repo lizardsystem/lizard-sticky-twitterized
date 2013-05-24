@@ -65,7 +65,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         if self.layer_arguments:
             result =  result.filter(id=self.layer_arguments['id'])
         return result
-        
+
 
     def layer(self, layer_ids=None, request=None):
         """Return a layer with all stickies or stickies with selected
@@ -124,8 +124,8 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
                    'name': '%s (%s)' % (sticky.tweet, sticky.twitter_name),
                    'shortname': str(sticky.tweet),
                    'object': sticky,
-                   #'google_coords': wgs84_to_google(sticky.geom.x,
-                   #                                 sticky.geom.y),
+                   'google_coords': wgs84_to_google(sticky.geom.x,
+                                                    sticky.geom.y),
                    'workspace_item': self.workspace_item,
                    'identifier': {'sticky_id': sticky.id},
                    } for sticky in stickies]
