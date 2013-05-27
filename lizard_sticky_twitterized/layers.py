@@ -20,7 +20,7 @@ from lizard_sticky_twitterized.models import StickyTweet
 
 ICON_STYLE = {'icon': 'twitter.png',
               'mask': ('twitter_mask.png', ),
-              'color': (0, 0, 0, 0)}
+              'color': (0.25, 0.6, 1, 0)}
 
 
 class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
@@ -71,8 +71,6 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         """Return a layer with all stickies or stickies with selected
         tags
         """
-
-        #import pdb; pdb.set_trace()
 
         layers = []
         styles = {}
