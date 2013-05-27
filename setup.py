@@ -3,7 +3,7 @@ from setuptools import setup
 version = '0.4.8dev'
 
 long_description = '\n\n'.join([
-    open('README.txt').read(),
+    open('README.rst').read(),
     open('TODO.txt').read(),
     open('CREDITS.txt').read(),
     open('CHANGES.txt').read(),
@@ -12,6 +12,7 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-staticfiles',
+    'lizard-sticky',
     'lizard-map',
     'sorl-thumbnail',
     'lizard-ui',

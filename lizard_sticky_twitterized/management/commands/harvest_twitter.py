@@ -43,8 +43,8 @@ class Command(BaseCommand):
                     new_tweet.tweet = tweet.get('text', "")
                     new_tweet.status_id = int(tweet.get('id', ""))
                     new_tweet.geom = Point(
-                        float(tweet.get('coordinates')['coordinates'][1]),
-                        float(tweet.get('coordinates')['coordinates'][0])
+                        float(tweet.get('coordinates')['coordinates'][0]),
+                        float(tweet.get('coordinates')['coordinates'][1])
                     )
                     media = tweet.get('entities').get('urls')
                     if media:

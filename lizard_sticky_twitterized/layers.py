@@ -72,6 +72,8 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         tags
         """
 
+        #import pdb; pdb.set_trace()
+
         layers = []
         styles = {}
         layer = mapnik.Layer("Stickies", WGS84)
