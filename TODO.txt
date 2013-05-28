@@ -1,5 +1,2 @@
 TODO
 ====
-
-- Don't store user/pass in harvest_twitter.py, but move to settings.py of 
-  the root project and add this information to documentation.
