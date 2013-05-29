@@ -21,6 +21,7 @@ from lizard_sticky_twitterized.models import StickyTweet
 ICON_STYLE = {'icon': 'twitter.png',
               'mask': ('twitter_mask.png', ),
               'color': (0.25, 0.6, 1, 0)}
+              #Twitter blue
 
 
 class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):

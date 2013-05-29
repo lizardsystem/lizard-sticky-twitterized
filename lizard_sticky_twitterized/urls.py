@@ -12,17 +12,17 @@ urlpatterns = patterns(
     url(r'^$',
         StickyBrowserView.as_view(),
         name='lizard_sticky_twitterized.sticky_browser'),
-    url(r'^ui/', include('lizard_ui.urls')),
-    url(r'^map/', include('lizard_map.urls')),
-    url(r'^sticky/', include('lizard_sticky.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+)
+
+if getattr(settings, 'LIZARD_TWITTER_STANDALONE', False):
+    admin.autodiscover()
+    urlpatterns += patterns(
+        '',
+        (r'^map/', include('lizard_map.urls')),
+        (r'^ui/', include('lizard_ui.urls')),
+        (r'', include('staticfiles.urls')),
+        (r'^sticky/', include('lizard_sticky.urls')),
+        (r'^admin/', include(admin.site.urls)),
     )
 
 urlpatterns += debugmode_urlpatterns()
-
-# if settings.DEBUG:
-#     # Add this also to the projects that use this application
-#     urlpatterns += patterns('',
-#         (r'', include('staticfiles.urls')),
-#         (r'^admin/', include(admin.site.urls)),
-#     )

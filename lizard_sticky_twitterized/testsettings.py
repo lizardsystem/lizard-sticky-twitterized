@@ -85,6 +85,8 @@ TWITTER_PASSWORD = "kikker123"
 
 SOUTH_TESTS_MIGRATE = False
 
+LIZARD_TWITTER_STANDALONE = True
+
 try:
     # Import local settings that aren't stored in svn.
     from lizard_sticky_twitterized.local_testsettings import *
