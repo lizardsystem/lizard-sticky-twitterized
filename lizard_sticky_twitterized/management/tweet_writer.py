@@ -20,13 +20,12 @@ class TweetWriter():
         tweet = self.tweet
         if tweet.get('coordinates') is not None:
             if self._full():
-                self._store_tweet(StickyTweet.objects.order_by('created_on')[0])
+                self._store_tweet(StickyTweet.objects.order_by('updated_on')[0])
             else:
                 self._store_tweet(StickyTweet())
 
     def _store_tweet(self, new_tweet):
         tweet = self.tweet
-        new_tweet.tweet_time = tweet.get('created_at')
         new_tweet.twitter_name = tweet.get('user').get('screen_name')
         new_tweet.tweet = tweet.get('text')
         new_tweet.status_id = int(tweet.get('id'))
@@ -34,11 +33,13 @@ class TweetWriter():
             float(tweet.get('coordinates').get('coordinates')[0]),
             float(tweet.get('coordinates').get('coordinates')[1])
         )
-        media = tweet.get('entities').get('urls')
-        if media:
-            new_tweet.media_url = media[0]
-        else:
-            new_tweet.media = None
+        try:
+            new_tweet.media_url = tweet.get('entities').get('media')[0].get('media_url')
+            print new_tweet.media_url
+        except AttributeError:
+            pass
+        except TypeError:
+            pass
         new_tweet.save()
 
     def _full(self):

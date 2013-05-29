@@ -117,7 +117,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
 
         stickies = self.stickies.filter(
             geom__distance_lte=(pnt, D(m=radius * 0.5))).distance(pnt).order_by('distance')
-            
+
         if stickies:
             stickies = [stickies[0]]
 
@@ -140,9 +140,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         """
         sticky = get_object_or_404(StickyTweet, pk=sticky_id)
         identifier = {'sticky_id': sticky.id}
-        
 
-        print sticky.media_url
         return {
             'name': '%s' % (sticky.twitter_name),
             'tweet': str(sticky.tweet),
@@ -172,6 +170,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         add_snippet = False
         if layout_options and 'add_snippet' in layout_options:
             add_snippet = layout_options['add_snippet']
+        print display_group
         return render_to_string(
             'lizard_sticky_twitterized/popup_sticky_twitterized.html',
             {'display_group': display_group,

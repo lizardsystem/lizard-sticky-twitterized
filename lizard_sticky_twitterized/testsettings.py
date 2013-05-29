@@ -37,7 +37,6 @@ DATABASES = {
 SITE_ID = 1
 INSTALLED_APPS = [
     'lizard_sticky_twitterized',
-    'lizard_sticky',
     'lizard_security',
     'lizard_map',
     'lizard_ui',
