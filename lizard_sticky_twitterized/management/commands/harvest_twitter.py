@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand
 import tweetstream
-from lizard_sticky_twitterized.management.tweet_writer import determine_store
+from lizard_sticky_twitterized.management import tweet_writer
 
 
 class Command(BaseCommand):
@@ -26,6 +26,8 @@ class Command(BaseCommand):
         try:
             with tweetstream.FilterStream(getattr(settings, 'TWITTER_USERNAME', 'pietje'), getattr(settings, "TWITTER_PASSWORD", "pietje"), track=args) as stream:
                 for tweet in stream:
-                    determine_store(tweet)
+                    writer = tweet_writer.TweetWriter(tweet)
+                    writer.store()
         except tweetstream.ConnectionError, e:
             print "Disconnected from twitter. Reason:", e.reason
+            pass

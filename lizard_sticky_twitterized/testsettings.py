@@ -83,6 +83,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 TWITTER_USERNAME = "wijgm"
 TWITTER_PASSWORD = "kikker123"
 
+SOUTH_TESTS_MIGRATE = False
+
 try:
     # Import local settings that aren't stored in svn.
     from lizard_sticky_twitterized.local_testsettings import *
