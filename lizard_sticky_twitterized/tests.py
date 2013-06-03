@@ -25,7 +25,7 @@ class HarvestTest(TestCase):
         self.assertEqual(StickyTweet.objects.all().count(), 1)
 
     def test_overwrite_with_more_than_300(self):
-        writer = tweet_writer.TweetWriter(tweet_with_coordinates)
-        for i in range(310):
+        writer = tweet_writer.TweetWriter(tweet_with_coordinates, limit=3)
+        for i in range(4):
             writer.store()
-        self.assertEqual(StickyTweet.objects.all().count(), 300)
+        self.assertEqual(StickyTweet.objects.all().count(), 3)
