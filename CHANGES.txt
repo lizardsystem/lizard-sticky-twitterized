@@ -2,8 +2,8 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.6 (unreleased)
-----------------
+0.5.1 (2013-06-03)
+------------------
 
 - Moved the twitter_connector into the app dir.
 
