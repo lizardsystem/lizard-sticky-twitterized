@@ -1,6 +1,7 @@
 """
 Adapter for lizard-sticky-twitterized
 """
+from __future__ import division, print_function
 import os
 import mapnik
 
@@ -17,6 +18,7 @@ from lizard_map.mapnik_helper import add_datasource_point
 from lizard_map.models import ICON_ORIGINALS
 from lizard_map.symbol_manager import SymbolManager
 from lizard_sticky_twitterized.models import StickyTweet
+from lizard_map.daterange import current_start_end_dates
 
 ICON_STYLE = {'icon': 'twitter.png',
               'mask': ('twitter_mask.png', ),
@@ -72,14 +74,13 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         """Return a layer with all stickies or stickies with selected
         tags
         """
-
+        start_end = current_start_end_dates(request)
         layers = []
         styles = {}
         layer = mapnik.Layer("Stickies", WGS84)
-
         layer.datasource = mapnik.PointDatasource()
 
-        for sticky in self.stickies:
+        for sticky in self.stickies.filter(updated_on__gte=start_end[0], updated_on__lte=start_end[1]):
             add_datasource_point(layer.datasource,
                 sticky.geom.x,
                 sticky.geom.y,
@@ -170,7 +171,6 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         add_snippet = False
         if layout_options and 'add_snippet' in layout_options:
             add_snippet = layout_options['add_snippet']
-        print display_group
         return render_to_string(
             'lizard_sticky_twitterized/popup_sticky_twitterized.html',
             {'display_group': display_group,

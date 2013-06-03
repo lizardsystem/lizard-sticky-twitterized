@@ -12,12 +12,12 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-staticfiles',
-    'lizard-sticky',
     'lizard-map',
     'sorl-thumbnail',
     'lizard-ui',
     'django-nose',
-    'tweetstream'
+    'tweetstream',
+    'twitter',
     ],
 
 tests_require = [

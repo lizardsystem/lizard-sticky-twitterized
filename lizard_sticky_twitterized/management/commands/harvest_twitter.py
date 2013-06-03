@@ -13,7 +13,6 @@ from threading import Timer
 class Command(BaseCommand):
     help = "Query Twitter's realtime search for a hashtag and store the results."
     args = "Some hash tags here..."
-    overwrite = False
 
     def handle(self, *args, **options):
         """
@@ -32,7 +31,7 @@ class Command(BaseCommand):
             for tweet in stream:
                 if not tweet:
                     print("Disconnected from twitter\nReconnect in " + str(wait) + " second(s)")
-                    Timer(wait, lambda: print("Attempting to reconnect")).start()
+                    Timer(wait, print("Attempting to reconnect")).start()
                     wait = wait*10
                 else:
                     writer = tweet_writer.TweetWriter(tweet)
