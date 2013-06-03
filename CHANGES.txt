@@ -11,6 +11,8 @@ Changelog of lizard-sticky-twitterized
 
 - Added filter on date functionality
 
+- Added a manifest.in
+
 
 0.4.7 (2011-11-23)
 ------------------
