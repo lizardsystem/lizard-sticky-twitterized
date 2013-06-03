@@ -2,8 +2,8 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.4.8 (unreleased)
-------------------
+0.5 (2013-06-03)
+----------------
 
 - Updated to new twitter api
 
