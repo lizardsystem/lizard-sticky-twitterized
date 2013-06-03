@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # (c) Nelen & Schuurmans.  GPL licensed.
 from django.core.management.base import BaseCommand
-from twitter_connector import listen_to_twitter
+from lizard_sticky_twitterized.twitter_connector import listen_to_twitter
 
 
 class Command(BaseCommand):
