@@ -5,7 +5,11 @@ Changelog of lizard-sticky-twitterized
 0.4.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Updated to new twitter api
+
+- Added twitter search
+
+- Added filter on date functionality
 
 
 0.4.7 (2011-11-23)
