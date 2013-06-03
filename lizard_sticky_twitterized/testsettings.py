@@ -79,9 +79,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     )
 
-TWITTER_USERNAME = "wijgm"
-TWITTER_PASSWORD = "kikker123"
-
 SOUTH_TESTS_MIGRATE = False
 
 LIZARD_TWITTER_STANDALONE = True

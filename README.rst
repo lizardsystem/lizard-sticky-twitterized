@@ -46,6 +46,10 @@ Add some references in your urls.py, i.e. ``(r'^', include('lizard_lizard_twitte
 Harvest tweets
 -------------
 
+Add to your local settings or testsettings twitter credentials:
+TWITTER_USERNAME = <username>
+TWITTER_PASSWORD = <password>
+
 Add a supervisor job to your server.cfg to start "bin/django
 harvest_twitter" with your keyword (escape hashtags: \#hashtag).
 
