@@ -86,7 +86,6 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
                 sticky.geom.y,
                 'Name',
                 'hssd')
-
         # generate "unique" point style name and append to layer
         style_name = "StickyTweets"
         styles[style_name] = self.style()

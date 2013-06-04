@@ -5,13 +5,13 @@ Changelog of lizard-sticky-twitterized
 0.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Included dependency of sorl.thumbnail in the readme
 
 
 0.6 (2013-06-04)
 ----------------
 
-- Nothing changed yet.
+- Added delete_duplicates function to search_twitter
 
 
 0.5.1 (2013-06-03)

@@ -34,7 +34,7 @@ Using the djangoapp in a site
 - Add lizard_sticky_twitter and lizard_map to the INSTALLED_APPS in your
   settings.
 
-- set TWITTER_USERNAME and TWITTER_PASSWORD in your settings file
+- Add sorl.thumbnail to your installed apps
 
 Make the database tables::
 
