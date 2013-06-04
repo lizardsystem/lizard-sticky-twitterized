@@ -14,12 +14,13 @@ from lizard_sticky_twitterized.models import StickyTweet
 
 
 def search_twitter(*args, **options):
-    consumer_key = 'UKLr0fV2t5uPi8DQ5B93JQ'
-    consumer_secret = 'ESf7dD8BfcqPrgwdNJctNojln9hnhwGgP2PrEtqOS3k'
-    access_token = '408445237-ZLnS39Glr5O30Hszg8HU7KgZs2vWpMVBlEui1Ced'
-    access_secret = '9Z47HpcubCLFJJQHAbH7ws2VbSJZFrveuiBoMgj98'
+    consumer_key = getattr(settings, 'CONSUMER_KEY')
+    consumer_secret = getattr(settings, 'CONSUMER_SECRET')
+    access_token = getattr(settings, 'ACCES_TOKEN')
+    access_secret = getattr(settings, 'ACCES_SECRET')
     t = Twitter(auth=OAuth(access_token, access_secret, consumer_key, consumer_secret))
-    search_params = dict(q="#weer", count=100, geocode="52.09,5.10,160km", result_type='recent', include_entities='1')
+    search_params = dict(q=args, count=100, geocode="52.09,5.10,160km",
+                         result_type='recent', include_entities='1')
     tweets = t.search.tweets(**search_params)
     while tweets:
         for tweet in tweets.get('statuses'):
@@ -32,6 +33,14 @@ def search_twitter(*args, **options):
             tweets = t.search.tweets(max_id=qs_dict['max_id'][0], **search_params)
         else:
             tweets = None
+    delete_duplicates()
+
+
+def delete_duplicates():
+    for row in StickyTweet.objects.all():
+        if StickyTweet.objects.filter(status_id=row.status_id).count() > 1:
+            row.delete()
+
 
 def listen_to_twitter(*args, **options):
     """
@@ -46,14 +55,16 @@ def listen_to_twitter(*args, **options):
     ...          follow=people, locations=locations) as stream
     """
     wait = 2
-    with tweetstream.FilterStream(getattr(settings, 'TWITTER_USERNAME', 'pietje'), getattr(settings, "TWITTER_PASSWORD", "pietje"), track=args) as stream:
+    with tweetstream.FilterStream(getattr(settings, 'TWITTER_USERNAME', 'pietje'),
+                                  getattr(settings, "TWITTER_PASSWORD", "pietje"),
+                                  track=args) as stream:
         for tweet in stream:
             if not tweet:
                 print("Disconnected from twitter\nReconnect in " + str(wait) + " second(s)")
                 Timer(wait, print("Attempting to reconnect")).start()
                 wait = wait * wait
-            elif wait > 172800:
-                print("Waited two days, twitter is broken. Giving up..")
+            elif wait > 172801:
+                print("Waited more than two days, twitter is broken. Giving up..")
                 break
             else:
                 writer = TweetWriter(tweet)
