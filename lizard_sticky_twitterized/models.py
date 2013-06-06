@@ -12,6 +12,7 @@ class StickyTweet(models.Model):
     tweet = models.CharField(blank=True, null=True, max_length=255)
     visible = models.BooleanField(default=True, help_text=u"Defines the site-wide visibility of the tweet")
     media_url = models.CharField(blank=True, max_length=255)
+    time = models.DateTimeField(blank=True, null=True)
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)

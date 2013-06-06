@@ -4,13 +4,15 @@ from __future__ import division, print_function
 
 from threading import Timer
 from django.conf import settings
-import urllib
 import urlparse
-from django.utils import simplejson as json
 from twitter import *
 import tweetstream
 from django.contrib.gis.geos import Point
 from lizard_sticky_twitterized.models import StickyTweet
+import locale
+from datetime import datetime, timedelta
+import time
+from django.utils import timezone
 
 
 def search_twitter(*args, **options):
@@ -88,11 +90,12 @@ class TweetWriter():
         tweet = self.tweet
         if tweet.get('coordinates') is not None:
             if self._full():
-                self._store_tweet(StickyTweet.objects.order_by('updated_on')[0])
+                self._store_tweet(StickyTweet.objects.order_by('time')[0])
             else:
                 self._store_tweet(StickyTweet())
 
     def _store_tweet(self, new_tweet):
+
         tweet = self.tweet
         new_tweet.twitter_name = tweet.get('user').get('screen_name')
         new_tweet.tweet = tweet.get('text')
@@ -101,6 +104,7 @@ class TweetWriter():
             float(tweet.get('coordinates').get('coordinates')[0]),
             float(tweet.get('coordinates').get('coordinates')[1])
         )
+        new_tweet.time = self._tweet_time(tweet.get('created_at'))
         try:
             new_tweet.media_url = tweet.get('entities').get('media')[0].get('media_url')
         except AttributeError:
@@ -113,3 +117,11 @@ class TweetWriter():
         limit = self.limit-1
         if StickyTweet.objects.count() > limit:
             return True
+
+    def _tweet_time(self, created_at):
+        locale.setlocale(locale.LC_TIME, "en_US.utf8")
+        time = datetime.strptime(created_at,
+                                     '%a %b %d %H:%M:%S +0000 %Y')
+        utc_time = timezone.make_aware(time, timezone.utc)
+        tweet_time = utc_time
+        return tweet_time

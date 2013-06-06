@@ -79,7 +79,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         styles = {}
         layer = mapnik.Layer("Stickies", WGS84)
         layer.datasource = mapnik.PointDatasource()
-
+        import pdb; pdb.set_trace()
         for sticky in self.stickies.filter(updated_on__gte=start_end[0], updated_on__lte=start_end[1]):
             add_datasource_point(layer.datasource,
                 sticky.geom.x,

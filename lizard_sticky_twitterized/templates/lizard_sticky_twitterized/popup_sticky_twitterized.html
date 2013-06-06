@@ -5,7 +5,7 @@
 <div>
 {% for display_object in display_group %}
 <strong><a href="http://www.twitter.com/{{ display_object.name }}">@{{ display_object.name }}</a></strong>&nbsp;
-{{ display_object.object.created_on|timesince }} {% trans "geleden" %}
+{{ display_object.object.time|timesince }} {% trans "geleden" %}
 <p>{{ display_object.tweet|urlize }}</p>
 {% thumbnail display_object.media_url "320x200" crop="center" as im %}<img src="{{ im.url }}">{% empty %}{% endthumbnail %}
 {% endfor %}
