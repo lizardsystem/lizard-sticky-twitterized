@@ -7,6 +7,12 @@ Changelog of lizard-sticky-twitterized
 
 - Included dependency of sorl.thumbnail in the readme
 
+- Store the actual tweet time
+
+- Display the actual tweet time
+
+- Enable filtering on the actual tweet time
+
 
 0.6 (2013-06-04)
 ----------------

@@ -66,9 +66,8 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         result = StickyTweet.objects.exclude(
             geom=None).exclude(visible=False)
         if self.layer_arguments:
-            result =  result.filter(id=self.layer_arguments['id'])
+            result = result.filter(id=self.layer_arguments['id'])
         return result
-
 
     def layer(self, layer_ids=None, request=None):
         """Return a layer with all stickies or stickies with selected
@@ -79,13 +78,13 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         styles = {}
         layer = mapnik.Layer("Stickies", WGS84)
         layer.datasource = mapnik.PointDatasource()
-        import pdb; pdb.set_trace()
-        for sticky in self.stickies.filter(updated_on__gte=start_end[0], updated_on__lte=start_end[1]):
+        stickies = self.stickies.exclude(time__gte=start_end[1]).filter(time__gte=start_end[0])
+        for sticky in stickies:
             add_datasource_point(layer.datasource,
-                sticky.geom.x,
-                sticky.geom.y,
-                'Name',
-                'hssd')
+                                 sticky.geom.x,
+                                 sticky.geom.y,
+                                 'Name',
+                                 'hssd')
         # generate "unique" point style name and append to layer
         style_name = "StickyTweets"
         styles[style_name] = self.style()
@@ -149,7 +148,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
             'identifier': identifier,
             'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
             'object': sticky,
-            }
+        }
 
     def symbol_url(self, identifier=None, start_date=None, end_date=None):
         return super(AdapterStickyTwitterized, self).symbol_url(
