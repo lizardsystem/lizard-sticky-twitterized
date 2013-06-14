@@ -10,8 +10,7 @@ import tweetstream
 from django.contrib.gis.geos import Point
 from lizard_sticky_twitterized.models import StickyTweet
 import locale
-from datetime import datetime, timedelta
-import time
+from datetime import datetime
 from django.utils import timezone
 
 

@@ -59,3 +59,8 @@ server.cfg::
 recipe = collective.recipe.supervisor
 port = ${serverconfig:supervisor-port}
 programs = ${buildout:bin-directory}/django harvest_twitter <keyword>
+
+Hashtags
+--------
+
+Escape all #'s when provided as arguments to search_twitter or harvest_twitter (\#lizard instead of #lizard)
