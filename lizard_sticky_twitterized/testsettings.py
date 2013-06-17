@@ -81,7 +81,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 SOUTH_TESTS_MIGRATE = False
 
-LIZARD_TWITTER_STANDALONE = True
+LIZARD_TWITTER_STANDALONE = False
 
 try:
     # Import local settings that aren't stored in svn.

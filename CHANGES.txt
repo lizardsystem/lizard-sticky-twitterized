@@ -5,6 +5,8 @@ Changelog of lizard-sticky-twitterized
 0.7 (unreleased)
 ----------------
 
+- Changed the stream to the twitter package and updated it to api 1.1. since api 1 is deprecated by twitter
+
 - Included dependency of sorl.thumbnail in the readme
 
 - Store the actual tweet time

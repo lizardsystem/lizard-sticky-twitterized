@@ -6,7 +6,6 @@ from threading import Timer
 from django.conf import settings
 import urlparse
 from twitter import *
-import tweetstream
 from django.contrib.gis.geos import Point
 from lizard_sticky_twitterized.models import StickyTweet
 import locale
@@ -55,22 +54,25 @@ def listen_to_twitter(*args, **options):
     FilterStream("username", "password", track=words,
     ...          follow=people, locations=locations) as stream
     """
+    consumer_key = getattr(settings, 'CONSUMER_KEY')
+    consumer_secret = getattr(settings, 'CONSUMER_SECRET')
+    access_token = getattr(settings, 'ACCES_TOKEN')
+    access_secret = getattr(settings, 'ACCES_SECRET')
     wait = 2
-    with tweetstream.FilterStream(getattr(settings, 'TWITTER_USERNAME', 'pietje'),
-                                  getattr(settings, "TWITTER_PASSWORD", "pietje"),
-                                  track=args) as stream:
-        for tweet in stream:
-            if not tweet:
-                print("Disconnected from twitter\nReconnect in " + str(wait) + " second(s)")
-                Timer(wait, print("Attempting to reconnect")).start()
-                wait = wait * wait
-            elif wait > 172801:
-                print("Waited more than two days, twitter is broken. Giving up..")
-                break
-            else:
-                writer = TweetWriter(tweet)
-                writer.store()
-                wait = 2
+    t = TwitterStream(auth=OAuth(access_token, access_secret, consumer_key, consumer_secret))
+    stream = t.statuses.filter(track=args[0], location="52.09,5.10,160km")
+    for tweet in stream:       
+        if not tweet:
+            print("Disconnected from twitter\nReconnect in " + str(wait) + " second(s)")
+            Timer(wait, print("Attempting to reconnect")).start()
+            wait = wait * wait
+        elif wait > 172801:
+            print("Waited more than two days, twitter is broken. Giving up..")
+            break
+        else:
+            writer = TweetWriter(tweet)
+            writer.store()
+            wait = 2
 
 
 class TweetWriter():
