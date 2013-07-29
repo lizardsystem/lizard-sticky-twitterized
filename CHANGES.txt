@@ -15,6 +15,8 @@ Changelog of lizard-sticky-twitterized
 
 - Enable filtering on the actual tweet time
 
+- Update to mapnik 2.2.0.
+
 
 0.6 (2013-06-04)
 ----------------
