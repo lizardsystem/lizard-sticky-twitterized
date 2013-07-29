@@ -98,7 +98,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         """
 
         stickies = self.stickies.filter(datetime__gte=start_date,
-                                         datetime__lte=end_date)
+                                        datetime__lte=end_date)
         return [{'datetime': sticky.datetime,
                  'value': sticky.description,
                  'unit': ''} for sticky in stickies]
