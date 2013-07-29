@@ -47,9 +47,8 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
             ICON_STYLE['icon'], **ICON_STYLE)
         output_filename_abs = os.path.join(
             settings.MEDIA_ROOT, 'generated_icons', output_filename)
-        # use filename in mapnik pointsymbolizer
-        point_looks = mapnik.PointSymbolizer(
-            output_filename_abs, 'png', 16, 16)
+        point_looks = mapnik.PointSymbolizer()
+        point_looks.filename = output_filename_abs
         point_looks.allow_overlap = True
         layout_rule = mapnik.Rule()
         layout_rule.symbols.append(point_looks)
