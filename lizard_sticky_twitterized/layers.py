@@ -79,12 +79,13 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         layer.datasource = mapnik.MemoryDatasource()
         stickies = self.stickies.exclude(time__gte=start_end[1]
                                          ).filter(time__gte=start_end[0])
-        for sticky in stickies:
+        for _id, sticky in enumerate(stickies):
             add_datasource_point(layer.datasource,
                                  sticky.geom.x,
                                  sticky.geom.y,
                                  'Name',
-                                 'hssd')
+                                 'hssd',
+                                 _id)
         # generate "unique" point style name and append to layer
         style_name = "StickyTweets"
         styles[style_name] = self.style()
