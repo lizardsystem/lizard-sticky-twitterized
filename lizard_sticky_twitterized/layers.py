@@ -76,7 +76,7 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         layers = []
         styles = {}
         layer = mapnik.Layer("Stickies", WGS84)
-        layer.datasource = mapnik.PointDatasource()
+        layer.datasource = mapnik.MemoryDatasource()
         stickies = self.stickies.exclude(time__gte=start_end[1]).filter(time__gte=start_end[0])
         for sticky in stickies:
             add_datasource_point(layer.datasource,
