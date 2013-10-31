@@ -2,7 +2,6 @@
 # (c) Nelen & Schuurmans.  GPL licensed.
 from __future__ import division, print_function
 
-from threading import Timer
 from django.conf import settings
 import urlparse
 from twitter import *
@@ -18,7 +17,8 @@ def search_twitter(*args, **options):
     consumer_secret = getattr(settings, 'CONSUMER_SECRET')
     access_token = getattr(settings, 'ACCES_TOKEN')
     access_secret = getattr(settings, 'ACCES_SECRET')
-    t = Twitter(auth=OAuth(access_token, access_secret, consumer_key, consumer_secret))
+    t = Twitter(auth=OAuth(access_token, access_secret,
+                           consumer_key, consumer_secret))
     search_params = dict(q=args, count=100, geocode="52.09,5.10,160km",
                          result_type='recent', include_entities='1')
     tweets = t.search.tweets(**search_params)
@@ -30,7 +30,8 @@ def search_twitter(*args, **options):
         if next_results:
             qs = next_results[1:]
             qs_dict = urlparse.parse_qs(qs, keep_blank_values=True)
-            tweets = t.search.tweets(max_id=qs_dict['max_id'][0], **search_params)
+            tweets = t.search.tweets(max_id=qs_dict['max_id'][0],
+                                     **search_params)
         else:
             tweets = None
     delete_duplicates()
@@ -40,39 +41,6 @@ def delete_duplicates():
     for row in StickyTweet.objects.all():
         if StickyTweet.objects.filter(status_id=row.status_id).count() > 1:
             row.delete()
-
-
-def listen_to_twitter(*args, **options):
-    """
-    Query Twitter's Streaming API for a keyword, and store the results.
-
-    ESCAPE keywords with #'s: \#hashtag instead of #hashtag.
-
-    FilterStream can be used to filter on a bbox:
-    Locations are a list of bounding boxes in which geotagged tweets should originate.
-    The argument should be an iterable of longitude/latitude pairs.
-    FilterStream("username", "password", track=words,
-    ...          follow=people, locations=locations) as stream
-    """
-    consumer_key = getattr(settings, 'CONSUMER_KEY')
-    consumer_secret = getattr(settings, 'CONSUMER_SECRET')
-    access_token = getattr(settings, 'ACCES_TOKEN')
-    access_secret = getattr(settings, 'ACCES_SECRET')
-    wait = 2
-    t = TwitterStream(auth=OAuth(access_token, access_secret, consumer_key, consumer_secret))
-    stream = t.statuses.filter(track=args[0], location="52.09,5.10,160km")
-    for tweet in stream:       
-        if not tweet:
-            print("Disconnected from twitter\nReconnect in " + str(wait) + " second(s)")
-            Timer(wait, print("Attempting to reconnect")).start()
-            wait = wait * wait
-        elif wait > 172801:
-            print("Waited more than two days, twitter is broken. Giving up..")
-            break
-        else:
-            writer = TweetWriter(tweet)
-            writer.store()
-            wait = 2
 
 
 class TweetWriter():
@@ -107,10 +75,9 @@ class TweetWriter():
         )
         new_tweet.time = self._tweet_time(tweet.get('created_at'))
         try:
-            new_tweet.media_url = tweet.get('entities').get('media')[0].get('media_url')
-        except AttributeError:
-            pass
-        except TypeError:
+            new_tweet.media_url = tweet.get('entities').get('media')[0].get(
+                'media_url')
+        except (AttributeError, TypeError):
             pass
         new_tweet.save()
 
@@ -122,7 +89,5 @@ class TweetWriter():
     def _tweet_time(self, created_at):
         locale.setlocale(locale.LC_TIME, "en_US.utf8")
         time = datetime.strptime(created_at,
-                                     '%a %b %d %H:%M:%S +0000 %Y')
-        utc_time = timezone.make_aware(time, timezone.utc)
-        tweet_time = utc_time
-        return tweet_time
+                                 '%a %b %d %H:%M:%S +0000 %Y')
+        return timezone.make_aware(time, timezone.utc)

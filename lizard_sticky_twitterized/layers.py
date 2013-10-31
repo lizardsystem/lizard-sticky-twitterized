@@ -116,7 +116,8 @@ class AdapterStickyTwitterized(workspace.WorkspaceItemAdapter):
         #print pnt, radius
 
         stickies = self.stickies.filter(
-            geom__distance_lte=(pnt, D(m=radius * 0.5))).distance(pnt).order_by('distance')
+            geom__distance_lte=(pnt, D(m=radius * 0.5))).distance(pnt
+                                                                  ).order_by('distance')
 
         if stickies:
             stickies = [stickies[0]]
