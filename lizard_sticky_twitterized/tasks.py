@@ -1,6 +1,6 @@
 from celery.task import task
 
-from lizard5_site.router import set_host
+from lizard_ui.multitenancy import set_host
 
 from lizard_sticky_twitterized.twitter_connector import search_twitter
 
