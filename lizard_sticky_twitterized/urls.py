@@ -20,7 +20,7 @@ if getattr(settings, 'LIZARD_TWITTER_STANDALONE', False):
         '',
         (r'^map/', include('lizard_map.urls')),
         (r'^ui/', include('lizard_ui.urls')),
-        (r'', include('staticfiles.urls')),
+        (r'', include('django.contrib.staticfiles.urls')),
         (r'^admin/', include(admin.site.urls)),
     )
 
