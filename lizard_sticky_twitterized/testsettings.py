@@ -83,8 +83,10 @@ SOUTH_TESTS_MIGRATE = False
 
 LIZARD_TWITTER_STANDALONE = False
 
+SECRET_KEY = "Does not need to be secret for testing"
+
 try:
-    # Import local settings that aren't stored in svn.
+    # Import local settings that aren't stored in version control.
     from lizard_sticky_twitterized.local_testsettings import *
 except ImportError:
     pass

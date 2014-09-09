@@ -1,5 +1,5 @@
 # (c) Nelen & Schuurmans.  GPL licensed, see LICENSE.txt.
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from django.conf import settings
 from django.contrib import admin
 from lizard_ui.urls import debugmode_urlpatterns
@@ -20,7 +20,7 @@ if getattr(settings, 'LIZARD_TWITTER_STANDALONE', False):
         '',
         (r'^map/', include('lizard_map.urls')),
         (r'^ui/', include('lizard_ui.urls')),
-        (r'', include('staticfiles.urls')),
+        (r'', include('django.contrib.staticfiles.urls')),
         (r'^admin/', include(admin.site.urls)),
     )
 
