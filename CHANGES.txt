@@ -2,7 +2,7 @@ Changelog of lizard-sticky-twitterized
 ===================================================
 
 
-0.7 (unreleased)
+1.0 (2014-12-15)
 ----------------
 
 - Changed the stream to the twitter package and updated it to api 1.1. since api 1 is deprecated by twitter
