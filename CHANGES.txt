@@ -17,6 +17,8 @@ Changelog of lizard-sticky-twitterized
 
 - Update to mapnik 2.2.0.
 
+- Updated to django 1.6.
+
 
 0.6 (2013-06-04)
 ----------------
